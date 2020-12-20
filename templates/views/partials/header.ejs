@@ -1,0 +1,81 @@
+<nav
+  class="navbar navbar-expand-lg navbar-light fixed-top"
+  style="background-color: #85aecc; margin-bottom: 0"
+>
+  <div class="container">
+    <!-- <a class="navbar-brand" href="/">Event Management</a> -->
+    <button
+      class="navbar-toggler"
+      type="button"
+      data-toggle="collapse"
+      data-target="#navbarSupportedContent"
+      aria-controls="navbarSupportedContent"
+      aria-expanded="false"
+      aria-label="Toggle navigation"
+    >
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav mr-auto">
+        <li class="nav-item">
+          <a class="nav-link navbar-brand active " id="brand_navbar" href="/"
+            >Event Management</a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " id="gallery_navbar" href="/gallery">Gallery</a>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle" href="#" id="event_navbar" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            Event
+          </a>
+        <div class="dropdown-menu" aria-labelledby="event_navbar">
+          <a class="dropdown-item" href="/eventRegistration?eventFlag=eventRegistration" id="event_navbar_dropdown1">Event Registration</a>
+          <a class="dropdown-item" href="/eventDashboard?eventFlag=eventDashboard" id="event_navbar_dropdown2">Event Dashboard</a>
+          <a class="dropdown-item" href="/eventNotice?eventFlag=notice" id="event_navbar_dropdown3">Event Notice</a>
+        </div>
+      </li>
+        <!-- <li class="nav-item">
+          <a class="nav-link " id="event_navbar" href="/event">Event</a>
+        </li> -->
+        <li class="nav-item">
+          <a class="nav-link " id="about_navbar" href="/about">About</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " id="contact_navbar" href="/contact">Contact</a>
+        </li>
+      </ul>
+
+      <ul class="navbar-nav ml-auto">
+        <% if(isAuthenticated) { %> 
+          <% if(typeof currentUser != 'undefined') { %>
+        <li class="nav-item dropdown">
+        <a class="nav-link dropdown-toggle" href="#" id="account_navbar" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          <i class='fas fa-user-circle' style="font-size:22px;"></i>&nbsp;<%=currentUser.name%>
+        </a>
+        <div class="dropdown-menu" aria-labelledby="account_navbar">
+          <a class="dropdown-item" href="/myaccount?accountOption=registeredEvents" id="account_navbar_dropdown1">Registered Events</a>
+          <a class="dropdown-item" href="/myaccount?accountOption=resetPassword" id="account_navbar_dropdown2">Reset Password</a>
+        </div>
+      </li>
+        <%}%>
+        <li class="nav-item">
+          <a class="nav-link" href="/logout">Logout</a>
+        </li>
+        <%} else {%>
+        <li class="nav-item">
+          <a class="nav-link " id="signup_navbar" href="/signup"
+            >Signup <span class="sr-only">(current)</span></a
+          >
+        </li>
+        <li class="nav-item">
+          <a class="nav-link " id="login_navbar" href="/login">Login</a>
+        </li>
+        <% } %>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<script src="/js/navbar_active.js"></script>

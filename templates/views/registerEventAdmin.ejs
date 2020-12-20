@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Event Registration</title>
+
+  <script src="/js/registerEventAdmin.js"></script>
+</head>
+
+<body>
+
+  <% if(typeof userEvents != 'undefined') { %>
+  <% if(userEvents.length != 0) { %>
+  <h1 style="text-align: center; color: #333333; padding: 5px ;">Event Registration</h1>
+  <form action="/registerEvent/removeParticipants" id="myAnchor" method="post" onsubmit="submitUncheckboxValues()">
+  <table class="table table-hover table-css">
+    <thead>
+      <tr>
+        <th>Event Info</th>
+        <th>User</th>
+        <th>Email</th>
+        <th>Registered Price</th>
+        <th>Discount</th>
+        <th>Paid</th>
+        
+        <th><input type="submit" value="Remove Participant" ></th>
+        <th>Edit Paid</th>
+        <th>Delete Event</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for(var i = 0; i < userEvents.length ; i++ )  {%>
+      <tr>
+        <td rowspan="<%=userEvents[i].length-1%>">
+          <strong>Event:&nbsp;</strong>
+          <% if(userEvents[i][userEvents[i].length-1].indoorEvent) {%>
+            <%=userEvents[i][userEvents[i].length-1].indoorEvent%><br>
+          <%} else {%>
+            <%=userEvents[i][userEvents[i].length-1].outdoorEvent%><br>
+          <%}%>
+          <strong>Collection:&nbsp;</strong>
+          <%=userEvents[i][userEvents[i].length-1].price%><br>
+          <strong>Discount:&nbsp;</strong>
+          <%=userEvents[i][userEvents[i].length-1].discountValue%>%<br>
+          <strong>Description:&nbsp;</strong>
+          <%=userEvents[i][userEvents[i].length-1].description%>
+        </td>
+      
+      <% for(var j = 0; j < userEvents[i].length-1; j++) {%>
+       
+        <td><%=userEvents[i][j].user%></td>
+        <td><%=userEvents[i][j].email%></td>
+        <td><%=userEvents[i][j].price%></td>
+        <td><%=userEvents[i][j].discountFlag%></td>
+        <td><%=userEvents[i][j].payment%></td>
+        <td><input type="checkbox" class="userInEventFlag" id="<%=userEvents[i][j].id%>" name="userInEventFlag" value="<%=userEvents[i][j].id%>"></td>
+        <script>
+          tickCheckboxOfParticipant('<%- userEvents[i][j].userInEventFlag%>','<%=userEvents[i][j].id%>')
+        </script>
+        <td><a href="" data-toggle="modal" data-target="#a<%=userEvents[i][j].id%>" class="btn btn-primary btn-sm">Edit</a></td>
+        <td><a href="/registerEvent/delete/<%=userEvents[i][j].id%>" class="btn btn-danger btn-sm">Delete</a></td>
+      </tr>
+
+      <!-- Edit paid field Model -->
+      <div class="modal" id="a<%=userEvents[i][j].id%>">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">Money Paid?</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+              </button>
+            </div>
+            <div class="modal-body">
+              <form action="/registerEvent/payment/<%=userEvents[i][j].id%>" method="post" >
+                Yes:<input type="radio"  name="payment" value="yes">
+                No:<input type="radio" name="payment" value="no">
+            </div>
+            <div class="modal-footer">
+              <button type="submit" class="btn btn-primary">Update</button>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      <%}%>  
+    <%}%>
+  
+      <tr>
+        <td><strong>Grand Total</strong></td>
+        <td></td>
+        <td></td>
+        <td><strong><%=grandTotal%></strong></td>
+        <td></td>
+        <td></td>
+        <td></td>
+        <td></td>
+      </tr>
+    </tbody>
+  </table>
+  <input type="hidden" id="unchecked-checkboxes" name="unchecked-checkboxes" value="">
+</form>
+  <%} else {%>
+  <p class="no-content-text">No Registration</p>
+  <%}%>
+  <%}%>
+
+
+  
+</body>
+
+</html>

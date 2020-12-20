@@ -1,0 +1,40 @@
+<div style="right: 10px; top: 20px; position: absolute;">
+	<a href="" data-toggle="modal" data-target="#uploadImage" class="btn btn-outline-primary">Upload Image</a>
+</div>
+
+<div class="modal" id="uploadImage">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title">Upload Image</h5>
+				<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form action="/admin/gallery/upload" method="post" enctype="multipart/form-data">
+					<input type="file" id="img" name="photo" accept="image/*">
+
+			</div>
+			<div class="modal-footer">
+				<button type="submit" class="btn btn-primary">Upload</button>
+			</div>
+			</form>
+		</div>
+	</div>
+</div>
+
+
+<%if(typeof gallery != 'undefined') {%>
+<div style="text-align: center;">
+	<h1>Gallery</h1>
+	<%gallery.forEach(function(user){%>
+	<span>
+		<a href="/admin/gallery/<%=user.id%>"><img src="" id="<%=user.id%>" alt="Loading..."></a>
+	</span>
+	<%})%>
+</div>
+<%}%>
+	
+	
+<script src="/js/galleryAdmin.js"></script>

@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<title></title>
+	<!-- Bootstrap CSS -->
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+		integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+</head>
+
+<body>
+	<%if(typeof gallery != 'undefined' && typeof id != 'undefined') {%>
+
+	<nav class="navbar navbar-expand-lg  ">
+		<div class="collapse navbar-collapse container" id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+				<div class="btn-group" role="group" aria-label="Button group with nested dropdown">
+					<a href="/admin" class="btn btn-primary">Admin Panel</a>
+					<div class="btn-group" role="group">
+						<button id="btnGroupDrop1" type="button" class="btn btn-primary dropdown-toggle"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"></button>
+						<div class="dropdown-menu" aria-labelledby="btnGroupDrop1" style="">
+							<a class="dropdown-item" href="/admin?flag=user">Users</a>
+							<a class="dropdown-item" href="/admin?flag=gallery">Gallery</a>
+							<a class="dropdown-item" href="/admin?flag=event">Event</a>
+							<a class="dropdown-item" href="/admin?flag=register">User Registration</a>
+							<a class="dropdown-item" href="/admin?flag=eventRegister">Event Registration</a>
+							<a class="dropdown-item" href="/admin?flag=contact">Contact Feedbacks</a>
+						</div>
+					</div>
+				</div>
+			</ul>
+			<ul class="navbar-nav ml-auto">
+				<a href=" " data-toggle="modal" data-target="#updateImage"
+					class="btn btn-outline-primary">Update</a>&nbsp;&nbsp;
+				<a href="/admin/gallery/delete/<%=id%>" class="btn btn-outline-danger">Delete</a>
+			</ul>
+		</div>
+	</nav>
+
+	<div class="modal" id="updateImage">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title">Update Image</h5>
+					<button type="button" class="close" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">&times;</span>
+					</button>
+				</div>
+				<div class="modal-body">
+					<form action="/admin/gallery/update/<%=id%>" method="post" enctype="multipart/form-data">
+						<input type="file" id="img" name="photo" accept="image/*">
+				</div>
+				<div class="modal-footer">
+					<button type="submit" class="btn btn-primary">Update</button>
+				</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+
+	<div style="text-align: center;">
+		<h1>Edit Gallery</h1><br><br>
+		<img src="" id="image"><br><br>
+		<div id="mydiv" data-test=<%= id %>></div>
+	</div>
+
+	<script src="/js/editimage.js"></script>
+
+<% if(error_message != '') {%>
+	<script type="text/javascript">
+		swal({
+			title: '<%-error_message%>',
+			icon: "warning",
+			confirmButtonText: "Submit",
+			buttons: {
+				cancel: true,
+				confirm: "Confirm",
+			},
+			dangerMode: true,
+		})
+	</script>
+<%}%>
+
+	<%}%>
+
+<!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

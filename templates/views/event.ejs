@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>Event</title>
+  <%- include('partials/heads_content') %>
+
+  <!-- Footer CSS -->
+  <link rel="stylesheet" type="text/css" href="/css/footer.css" />
+
+  <!-- Event Css -->
+  <link rel="stylesheet" href="/css/event.css" />
+
+  <link rel="stylesheet" href="/css/eventtable.css" />
+
+  <link rel="stylesheet" href="/css/eventdashboard.css" />
+  
+  <link rel="stylesheet" href="/css/signup_login.css">
+
+  <link rel="stylesheet" href="/css/notice.css" />
+
+  <link rel="stylesheet" href="/css/participantmodal.css" />
+  
+</head>
+
+<body>
+  <%- include('partials/header') %>
+  <div style="margin-bottom: 70px"></div>
+<!---------------------------------------- Event Registration ------------------------------------->
+  <% if(eventFlag == 'eventRegistration') {%>
+    <form action="/event/register" method="POST" id="registration-form"> 
+  <div class="container-fluid" style="min-height: 60vh">
+    <div class="row">
+      <div class="col-sm-12 col-lg-4" style="margin-top: 11px;">
+        <div class="list-group" id="list-tab" role="tablist">
+          <a class="list-group-item list-group-item-action active" id="list-indoor-list" data-toggle="list"
+            href="#list-indoor" role="tab" aria-controls="indoor">Indoor Events</a>
+          <a class="list-group-item list-group-item-action" id="list-outdoor-list" data-toggle="list"
+            href="#list-outdoor" role="tab" aria-controls="outdoor">Outdoor Events</a>
+        </div>
+      </div>
+      <div class="col-sm-12 col-lg-8">
+        <div class="tab-content" id="nav-tabContent">
+           
+          <% if(typeof indoorevents != 'undefined') { %>
+            <% if(indoorevents.length != 0) { %>
+          <div class="tab-pane fade show active" id="list-indoor" role="tabpanel" aria-labelledby="list-indoor-list">
+            <div class="tablebodycss">
+              <div class="sectiontablecss" style="margin-top: 10px !important">
+                <div class="tbl-header">
+                  <table class="tablecssevent" cellpadding="0" cellspacing="0" border="0">
+                    <thead>
+                      <tr>
+                        <th>Indoor Game</th>
+                        <th>Date</th>
+                        <th>Price</th>
+                        <th>Discount</th>
+                        <th>Select</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+                <div class="tbl-content">
+                  <table class="tablecssevent" cellpadding="0" cellspacing="0" border="0">
+                    <tbody>
+                      <% for(var i=0; i < indoorevents.length ; i++ ) { %>
+                      <tr>
+                        <td><%=indoorevents[i].indoorEvent%></td>
+                        <td><%=indoorevents[i].date.toDateString()%></td>
+                        <td class="indoor<%-i%>"><%=indoorevents[i].price%></td>
+                        <td class="indoor<%-i%>"><%=indoorevents[i].discountValue%>%</td>
+                        <td><input type="checkbox" class="indoor<%-i%>" name="<%=indoorevents[i].id%>"></td>
+                      </tr>
+                      <%}%>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          <%} else {%>
+              <div class="tab-pane fade show active" id="list-indoor" role="tabpanel" aria-labelledby="list-indoor-list">
+                <p class="no-content-text">No Indoor Games</p>
+              </div>
+              <%}%>
+          <%}%>
+
+          <% if(typeof outdoorevents != 'undefined') { %>
+            <% if(outdoorevents.length != 0) { %>
+          <div class="tab-pane fade" id="list-outdoor" role="tabpanel" aria-labelledby="list-outdoor-list">
+            <div class="tablebodycss">
+              <div class="sectiontablecss" style="margin-top: 10px !important">
+                <div class="tbl-header">
+                  <table class="tablecssevent" cellpadding="0" cellspacing="0" border="0">
+                    <thead>
+                      <tr>
+                        <th>Outdoor Game</th>
+                        <th>Date</th>
+                        <th>Price</th>
+                        <th>Discount</th>
+                        <th>Select</th>
+                      </tr>
+                    </thead>
+                  </table>
+                </div>
+                <div class="tbl-content">
+                  <table class="tablecssevent" cellpadding="0" cellspacing="0" border="0">
+                    <tbody>
+                      <% for(var i=0; i < outdoorevents.length ; i++ ) { %>
+                      <tr>
+                        <td><%=outdoorevents[i].outdoorEvent%></td>
+                        <td><%=outdoorevents[i].date.toDateString()%></td>
+                        <td class="outdoor<%-i%>"><%=outdoorevents[i].price%></td>
+                        <td class="outdoor<%-i%>"><%=outdoorevents[i].discountValue%>%</td>
+                        <td><input type="checkbox" class="outdoor<%-i%>" class="eventsCheckbox" name="<%=outdoorevents[i].id%>">
+                        </td>
+                      </tr>
+                      <%}%>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+          
+              <%} else {%>
+              <div class="tab-pane fade" id="list-outdoor" role="tabpanel" aria-labelledby="list-outdoor-list">
+                <p class="no-content-text">No Outdoor Games</p>
+              </div>
+              <%}%>
+          <%}%>
+        </div>
+      </div>
+      <% if(indoorevents.length != 0 || outdoorevents.length != 0) { %>
+      <div class="col-sm-12 my-3" style="text-align: center;">
+        <button type="submit" class="btn-footer btn" style="align-items: center;">Register</button>
+      </div>
+      <%}%>
+    </div>
+  </div>
+</form>
+  <%}%>
+<!----------------------------------- Event Dashbord -------------------------------------->
+<%if(eventFlag == 'eventDashboard') {%>
+    <%if(EventDates != 'undefined') {%>
+      <%if(EventDates.length != 0) {%>
+  <div class="container-fluid registered-event-main">
+    <div class="row">
+     <% for(var i=0; i < EventDates.length; i++) {%>
+      <div class="card text-center eventcardcss" style="padding: 0; border: 1px solid #85aecc; margin: 5px;">
+        <h4 class="card-header" style="background-color: #85aecc;">
+          <%=EventDates[i][EventDates[i].length-1]%>
+        </h4>
+        <div class="card-body">
+          <% for(var j = 0; j < EventDates[i].length -1 ; j++) { %>
+              <a href="#openModal-about<%=i%><%=j%>">
+                <p class="card-title"><%=EventDates[i][j][0]%></p>
+              </a>
+               <!-- Modal of participants for indoor events -->
+                <div id="openModal-about<%=i%><%=j%>" class="modalDialog">
+                  <div>
+                      <a href="#close" title="Close" class="close">X</a>
+                      <h2 style="text-align: center; padding-top: 10px;">Participants</h2>
+                      <div class="col-sm-12" style="padding: 0 !important;">
+                          <div class="tablebodycss">
+                              <div class="sectiontablecss" style="margin-top: 10px !important">
+                                  <div class="tbl-header">
+                                    <% if(EventDates[i][j][1]) {%>
+                                      <table class="tablecssevent" cellpadding="0" cellspacing="0" border="0">
+                                          <thead>
+                                              <tr>
+                                                  <th>Sr.</th>
+                                                  <th>Participant 1</th>
+                                                  <th></th>
+                                                  <th>Participant 2</th>
+                                              </tr>
+                                          </thead>
+                                      </table>
+                                  </div>
+                                  <div class="tbl-content">
+                                      <table class="tablecssevent" cellpadding="0" cellspacing="0" border="0">
+                                          <tbody>
+                                            <%for(var x =0; x < EventDates[i][j][1].length ; x+=2) { %>
+                                              <tr>
+                                                <td><%=(x+(1-(x/2)))%></td>
+                                                  <%if(EventDates[i][j][1][x]){%>
+                                                  <td><%=EventDates[i][j][1][x].email%></td>
+                                                  <%}else{%>
+                                                    <td>-</td>
+                                                    <%}%>
+                                                  <td>vs</td>
+                                                  <%if(EventDates[i][j][1][x+1]){%>
+                                                  <td><%=EventDates[i][j][1][x+1].email%></td>
+                                                  <%}else{%>
+                                                    <td>-</td>
+                                                    <%}%>
+                                              </tr>
+                                            <%}%>
+                                          </tbody>
+                                      </table>
+                                      <%} else {%>
+                                        <p style="font-size: 20px;">no participants registered</p>
+                                      <%}%>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                    </div>
+                  </div>
+          <%}%>
+        </div>
+      </div>
+
+     
+
+        <%}%>
+    </div>
+  </div>
+  <%}else {%>
+    <div class="registered-event-main">
+      <p class="no-content-text">No Games</p>
+    </div>
+  <%}%>
+  <%}%>
+  <%}%>
+<!----------------------------------------- Notice section -------------------------------->
+  <%if(eventFlag == 'notice') {%>
+  <% if(typeof notices != 'undefined') {%>
+    <% if(notices.length != 0) { %> 
+      <div class="noitce-main registered-event-main">
+        <% for(var i=0; i < notices.length; i++){%>
+          <div class="container">
+                <div class="card my-2 z-depth-2">
+              <div class="card-header notice-heading" >
+                <%-notices[i].heading%>
+              </div>
+              <div class="card-body">
+                <p class="card-text"><%-notices[i].notice%></p>
+              </div>
+            </div>
+          </div>
+        <%}%>
+      </div>
+  <% } else {%>
+    <div class="registered-event-main">
+    <p class="no-content-text">No Notices</p>
+    </div>
+  <%}%>
+  <%}%>
+  <%}%>
+<!-- ------------------------------------------------------------------------------------------- -->
+
+  <%- include('partials/footer') %>
+
+  <% if(error_message != '') { %>
+    <script type="text/javascript">
+      swal({
+        title: '<%-error_message%>',
+        icon: "warning",
+        confirmButtonText: "Submit",
+        buttons: {
+          cancel: true,
+          confirm: "Confirm",
+        },
+        dangerMode: true,
+      })
+    </script>
+  <%}%>
+
+
+  <!---------------------------------- Discount and Total Event Price ---------------------------->
+
+  <!-- Script is used to check discount and calculate total
+ price of event registerd by user and also ask form confirmation -->
+  <% if(typeof indoorevents != 'undefined') { %>
+    <% if(indoorevents.length != 0) { %>
+
+  <script >
+  function discountCheck(eventLength, eventName) {
+  var eventsTotal = 0
+  for (var i = 0; i < eventLength; i++) {
+    var rergisteredEvent = document.getElementsByClassName(eventName + i)
+    if (rergisteredEvent[2].checked) {
+      if (<%- discount %> && totalSelectedEvent > 1) {
+        var discountOnEvent = (parseInt(rergisteredEvent[0].innerHTML) * rergisteredEvent[1].innerHTML.slice(0, parseInt(rergisteredEvent[1].innerHTML.length) - 1)) / 100
+        eventsTotal += parseInt(rergisteredEvent[0].innerHTML) - discountOnEvent
+      } else {
+        eventsTotal += parseInt(rergisteredEvent[0].innerHTML)
+      }
+    }
+  }
+  return eventsTotal
+}
+
+$("#registration-form").submit(function (e) {
+  totalSelectedEvent = 0
+  var allInputs = document.getElementsByTagName('input')
+  for (value in allInputs) {
+    if (allInputs[value].checked) {
+      totalSelectedEvent++
+    }
+  }
+  var indoorDiscount = discountCheck(<%- indoorevents.length %>, 'indoor')
+  var outdoorDiscount = discountCheck(<%- outdoorevents.length %>, 'outdoor')
+  return confirm(" Your total price is (" + (indoorDiscount + outdoorDiscount) + "Rs)" + "\n Do you like to register?");
+})
+  </script>
+  <%}%>
+  <%}%>
+
+  <!-- ------------------------------------------------------------------------------------------ -->
+
+  <script>
+    $(window)
+      .on("load resize ", function () {
+        var scrollWidth =
+          $(".tbl-content").width() - $(".tbl-content table").width();
+        $(".tbl-header").css({ "padding-right": scrollWidth });
+      })
+      .resize();
+  </script>
+</body>
+
+</html>

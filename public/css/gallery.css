@@ -1,0 +1,23 @@
+.gallery_paragraph {
+  font-size: 15px;
+  color: #777;
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+.gallery_head {
+  margin-bottom: 1em;
+  line-height: 1.4;
+  font-weight: 400;
+  color: #444;
+}
+
+.carousel_css {
+  height: 80vh;
+}
+
+@media only screen and (max-width: 600px) {
+  .carousel_css {
+    height: 40vh;
+  }
+}
